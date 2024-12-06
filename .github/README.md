@@ -2,9 +2,10 @@
 ## CS110 Final Project S1, 2024
 ## Team Members
 Isaiah Gabbay
+***
 
 ## Project Description
-<< Creates a game where the objective is to click on the pie in the center of the screen. The player can purchase modules which increase the passive score per second, which starts at 0. Random boosters also spawn on the screen, which gives the user a random effect with weighted randomness from a pool of effects. The objective is to get as high a score as possible, which is saved in a database. >>
+ Creates a game where the objective is to click on the pie in the center of the screen. The player can purchase modules which increase the passive score per second, which starts at 0. Random boosters also spawn on the screen, which gives the user a random effect with weighted randomness from a pool of effects. The objective is to get as high a score as possible, which is saved in a database. 
 ***
 
 ## GUI Design
@@ -16,17 +17,17 @@ Isaiah Gabbay
 ## Program Design
 ### Features
 
-1. << Pie that adds a specified amount to score when clicked >>
-2. << Text on top which gives score from clicks and buildings >>
-3. << Buildings that gives users upgrades when clicked, either increasing the power of the click or increasing non-clicking score >>
-4. << Diamond cookies that appear and give random effects if clicked >>
-5. << Highscore feature that saves highest score even after game is closed. >>
+1.  Pie that adds a specified amount to score when clicked 
+2.  Text on top which gives score from clicks and buildings 
+3.  Buildings that gives users upgrades when clicked, either increasing the power of the click or increasing non-clicking score 
+4.  Diamond cookies that appear and give random effects if clicked 
+5.  Highscore feature that saves highest score even after game is closed. 
 
 ### Classes
-- << Controller: Controls the game >>
-- << Pie: Generates and controls the pie object in the center of the screen >>
-- << Boosts: Controls the "diamond pies" which are random boosts that give weighted random effects >>
-- << Upgrade: Controls the menu of different upgrades that increase the passively generated pies per second >>
+-  Controller: Controls the game 
+-  Pie: Generates and controls the pie object in the center of the screen 
+-  Boosts: Controls the "diamond pies" which are random boosts that give weighted random effects 
+-  Upgrade: Controls the menu of different upgrades that increase the passively generated pies per second 
 
 
 ## ATP
@@ -42,21 +43,3 @@ Isaiah Gabbay
 | 8    | Observe the PPS display after purchasing upgrades   | PPS updates correctly based on purchased upgrades         |
 | 9    | Check the high score display when score increases   | High score updates if the current score exceeds it        |
 | 10   | Reach 5000 pies                                     | Color of stat trackers changes                            |
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
