@@ -14,11 +14,13 @@ Creates a game where the objective is to click on the pie in the center of the s
 
 
 ### Features
-1: Pie that adds a specified amount to score when clicked
-2: Text on top which gives score from clicks and buildings
-3: Buildings that gives users upgrades when clicked, either increasing the power of the click or increasing non-clicking score
-4: Diamond cookies that appear and give random effects if clicked
-5. Highscore feature that saves highest score even after game is closed.
+
+1. << Pie that adds a specified amount to score when clicked >>
+2. << Text on top which gives score from clicks and buildings >>
+3. << Buildings that gives users upgrades when clicked, either increasing the power of the click or increasing non-clicking score >>
+4. << Diamond cookies that appear and give random effects if clicked >>
+5. << Highscore feature that saves highest score even after game is closed. >>
+
 ### Classes
 Controller: Controls the game
 Pie: Generates and controls the pie object in the center of the screen
