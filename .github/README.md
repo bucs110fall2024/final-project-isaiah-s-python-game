@@ -13,7 +13,7 @@ Isaiah Gabbay
 ### Final Design
 ![final gui](/assets/finalgui.png)
 
-
+## Program Design
 ### Features
 
 1. << Pie that adds a specified amount to score when clicked >>
