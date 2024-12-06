@@ -14,7 +14,7 @@ class Controller:
         self.background = pygame.image.load(self.background_path)
         self.clock = pygame.time.Clock()
         self.score = 0
-        self.pps = 0  
+        self.pps = 0.5  
         self.multiplier = 1  
         self.pie = Pie(300, 300, 100, screen, click_effect=self.increase_score)
         self.boosts = []
@@ -27,10 +27,12 @@ class Controller:
         self.action_text_position = (0, 0)
         self.action_text_start_time = 0
         self.upgrades = []
+        self.double_click_score_multiplier = 1
         self.upgrades_data()
         self.high_score = self.load_high_score()
         self.purchase_message = ""  
         self.purchase_message_position = (self.width // 2, 0) 
+        self.purchase_message_start_time = 0  
 
     def load_high_score(self):
         if os.path.exists("high_score.txt"):
@@ -48,19 +50,20 @@ class Controller:
                 file.write(str(self.high_score))
 
     def increase_score(self):
-        self.score += 1 * self.multiplier  
-        self.action_text = f"+{1 * self.multiplier} score"
+        score_increase = 1 * self.multiplier * self.double_click_score_multiplier 
+        self.score += score_increase  
+        self.action_text = f"+{score_increase} score"
         self.action_text_position = (self.pie.x, self.pie.y)
         self.action_text_start_time = time.time()
         print(f"Score increased! Current score: {self.score}")
 
     def draw_score(self):
         score_text = f"Pies: {int(self.score)}"
-        pps_text = f"PPS: {int(self.pps)}" 
+        pps_text = f"PPS: {self.pps}" 
         multiplier_text = f"Multiplier: {int(self.multiplier)}"
         high_score_text = f"High Score: {int(self.high_score)}"
 
-        if self.score >= 10000:
+        if self.score >= 100000:
             score_surface = self.font.render(score_text, True, (0, 255, 0)) 
             pps_surface = self.font.render(pps_text, True, (0, 255, 0))
             multiplier_surface = self.font.render(multiplier_text, True, (0, 255, 0))
@@ -85,40 +88,41 @@ class Controller:
         self.screen.blit(multiplier_surface, multiplier_rect)
         self.screen.blit(high_score_surface, high_score_rect)
 
-        if self.action_text and (time.time() - self.action_text_start_time < 0.5):
+        if self.action_text and (time.time() - self.action_text_start_time < 0.25):
             action_surface = self.action_font.render(self.action_text, True, self.action_text_color)
             action_rect = action_surface.get_rect(center=self.action_text_position)
             self.screen.blit(action_surface, action_rect)
 
-        if self.purchase_message:
+        if self.purchase_message and (time.time() - self.purchase_message_start_time < 0.25):
             purchase_surface = self.font.render(self.purchase_message, True, (255, 0, 0))  
-            purchase_rect = purchase_surface.get_rect(center=(self.width // 2, 140))  
+            purchase_rect = purchase_surface.get_rect(center=self.purchase_message_position)  
             self.screen.blit(purchase_surface, purchase_rect)
 
     def mouseevent(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:
             if self.pie.is_clicked(event.pos):
-                print("Pie clicked!")
-                self.pie.on_click() 
+                self.increase_score()  
             for boost in self.boosts:
                 if boost.is_clicked(event.pos):
-                    boost.on_click(self)
-                    self.action_text = f"{boost.effect_type.replace('_', ' ').title()} activated!"
-                    self.action_text_position = (boost.x, boost.y)
-                    self.action_text_start_time = time.time()
+                    boost.on_click(self) 
+                    print(f"{boost.effect_type.replace('_', ' ').title()} activated!")
             for upgrade in self.upgrades:
-                if upgrade.is_clicked(event.pos):
-                    print(f"Upgrade {upgrade.name} clicked!")
-                    if upgrade.purchase(self): 
-                        self.action_text = f"Purchased {upgrade.name}!"
-                        self.purchase_message = ""  
+                if upgrade.is_clicked(event.pos):  
+                    if self.score >= upgrade.base_price:  
+                        if upgrade.purchase(self):  
+                            self.purchase_message = f"+{upgrade.pps} PPS from {upgrade.name}!"
+                            self.purchase_message_position = (upgrade.x + upgrade.rect.width // 2, upgrade.y + upgrade.rect.height)
+                            self.purchase_message_start_time = time.time()
+                            print(f"Purchased {upgrade.name}!")
                     else:
                         self.purchase_message = "Not enough pies to purchase upgrade!"
-                        self.purchase_message_position = event.pos  
+                        self.purchase_message_position = (upgrade.x + upgrade.rect.width // 2, upgrade.y + upgrade.rect.height)
+                        self.purchase_message_start_time = time.time()
+
 
     def spawn_boost(self):
-        effects = ["double_click_score", "increase_score", "increase_multiplier", "five_times_multiplier", "fifty_times_multiplier"]
-        weights = [35, 25, 25, 14, 1]
+        effects = ["double_click_score", "increase_score", "five_times_multiplier", "2x Score"]
+        weights = [48, 37, 14, 1]
         effect_type = random.choices(effects, weights=weights)[0]
         x = random.randint(50, self.screen.get_width() * 3 // 4 - 50)
         y = random.randint(50, self.screen.get_height() - 50)
@@ -134,17 +138,7 @@ class Controller:
         for boost in self.boosts:
             boost.update()
         self.boosts = [boost for boost in self.boosts if boost.active]
-
-    def draw(self):
-        self.screen.blit(self.background, (0, 0))
-        self.pie.draw()
-        self.draw_score()
-        for boost in self.boosts:
-            boost.draw()
-        for upgrade in self.upgrades:
-            upgrade.draw()
-        pygame.display.flip()
-
+        
     def upgrades_data(self):
         upgrade_data = [
             {"name": "Oven", "base_price": 100, "pps": 0.5, "image_path": r"C:\Users\isaia\OneDrive\Documents\Desktop\final-project-isaiah-s-python-game\.github\assets\oven.png"},
@@ -154,16 +148,15 @@ class Controller:
         ]
         
         upgrade_data.sort(key=lambda u: u["pps"])
-
+        
         menu_x = self.width * 3 // 4
         menu_width = 200
         upgrade_height = 100
-        padding = 10
-        start_y = padding
-
+        border = 10
+        start_y = border
         for i, upgrade in enumerate(upgrade_data):
             x = menu_x + (menu_width - 180) // 2
-            y = start_y + i * (upgrade_height + padding)
+            y = start_y + i * (upgrade_height + border)
             self.upgrades.append(
                 Upgrade(
                     x, y, 
@@ -174,6 +167,18 @@ class Controller:
                     self.screen
                 )
             )
+
+
+
+    def draw(self):
+        self.screen.blit(self.background, (0, 0))
+        self.pie.draw()
+        self.draw_score()
+        for boost in self.boosts:
+            boost.draw()
+        for upgrade in self.upgrades:
+            upgrade.draw()
+        pygame.display.flip()
 
     def run(self):
         running = True

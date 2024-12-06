@@ -8,9 +8,9 @@ Creates a game where the objective is to click on the pie in the center of the s
 ## GUI Design
 
 ### Initial Design
-![initial gui](assets/firstgui.jpg)
+![initial gui](/assets/firstgui.png)
 ### Final Design
-![final gui](assets/finalgui.jpg)
+![final gui](/assets/finalgui.png)
 
 
 ### Features
@@ -19,21 +19,29 @@ Creates a game where the objective is to click on the pie in the center of the s
 3: Buildings that gives users upgrades when clicked, either increasing the power of the click or increasing non-clicking score
 4: Diamond cookies that appear and give random effects if clicked
 5. Highscore feature that saves highest score even after game is closed.
+### Classes
+Controller: Controls the game
+Pie: Generates and controls the pie object in the center of the screen
+Randomobjects: Controls the "diamond pies" which 
 ## ATP
-| Step                 |Procedure             |Expected Results                   |
-|----------------------|:--------------------:|----------------------------------:|
-| 1                    |:Run controller.py:|GUI window appears with the pie and background displayed:|
-| 2                    |:Click on the pie:|Message appears on pie "+1 score:|
-| 3                    |:Observe the score:|Score initially increases by 1 on each click of the pie |
-| 4                    |:Click anywhere besides the pie:|No response from program:|
-| 5                    | Wait for boost to appear|Boost appears on screen with asset loaded|
-| 6                    | Purchase an oven | Upgrade is purchased, score decreases by the 100 |
-| 7                    | Observe the CPS display | CPS increases based on the purchased upgrade |
-| 8                    | Click on the boost | Boost effect is applied, and score or CPS updates accordingly |
-| 9                    | Check the high score display | High score updates if the current score exceeds it |
-| 10                   | Reach 5000 points | Score, cps, and multiplier should change color|
-| 10                   | Close the game window | The game exits without errors |
-| 11                   | Reopen game | High score from last game appears |
+| Step | Procedure                                            | Expected Results                                           |
+|------|------------------------------------------------------|-----------------------------------------------------------|
+| 1    | Start the game and click the pie                    | Score increases by 1 on each click                        |
+| 2    | Click anywhere besides the pie, boosts, or upgrades                    | Nothing happens                        |
+| 3    | Wait for a boost to appear and click it             | Boost effect is applied, updating score or PPS as intended|
+| 4    | Activate the five times multiplier boost and click the pie again | Score increases by 2 per click                           |
+| 5    | Purchase an upgrade that increases score            | Score increases by the amount specified by the upgrade    |
+| 6    | Attempt to purchase an upgrade and observe the message | "Upgrade purchased" message displays for 0.25 seconds and then disappears |
+| 7    | Attempt to purchase an upgrade without enough pies  | "Not enough pies" message displays for 0.25 seconds and then disappears |
+| 8    | Observe the PPS display after purchasing upgrades   | PPS updates correctly based on purchased upgrades         |
+| 9    | Check the high score display when score increases   | High score updates if the current score exceeds it        |
+| 10   | Reach 5000 pies                                     | Color of stat trackers changes                            |
+
+
+
+
+
+
 
 
 

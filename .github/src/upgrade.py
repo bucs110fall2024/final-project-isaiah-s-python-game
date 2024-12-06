@@ -30,10 +30,11 @@ class Upgrade:
         if controller.score >= self.price: 
             self.quantity += 1
             controller.score -= self.price  
-            self.price *= 1.2  
-            controller.pps += self.pps  
-            print(f"Purchased {self.name}. New price: {self.price}, CPS: {controller.pps}")
+            self.price = round(self.price * 1.2)  
+            controller.pps += self.pps
+            controller.update_pps()  
+            print(f"Purchased {self.name}. New price: {self.price}, PPS: {controller.pps}")
             return True
         else:
             print("Not enough pies to purchase upgrade.")
-            return False
+        return False
