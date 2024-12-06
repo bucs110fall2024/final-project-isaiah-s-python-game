@@ -4,9 +4,10 @@
 Isaiah Gabbay
 
 ## Project Description
-Creates a game where the objective is to click on the pie in the center of the screen. The player can purchase modules which increase the passive score per second, which starts at 0. Random boosters also spawn on the screen, which gives the user a random effect with weighted randomness from a pool of effects. The objective is to get as high a score as possible, which is saved in a database.
-## GUI Design
+<< Creates a game where the objective is to click on the pie in the center of the screen. The player can purchase modules which increase the passive score per second, which starts at 0. Random boosters also spawn on the screen, which gives the user a random effect with weighted randomness from a pool of effects. The objective is to get as high a score as possible, which is saved in a database. >>
+***
 
+## GUI Design
 ### Initial Design
 ![initial gui](/assets/firstgui.png)
 ### Final Design
@@ -22,9 +23,12 @@ Creates a game where the objective is to click on the pie in the center of the s
 5. << Highscore feature that saves highest score even after game is closed. >>
 
 ### Classes
-Controller: Controls the game
-Pie: Generates and controls the pie object in the center of the screen
-Randomobjects: Controls the "diamond pies" which 
+- << Controller: Controls the game >>
+- << Pie: Generates and controls the pie object in the center of the screen >>
+- << Boosts: Controls the "diamond pies" which are random boosts that give weighted random effects >>
+- << Upgrade: Controls the menu of different upgrades that increase the passively generated pies per second >>
+
+
 ## ATP
 | Step | Procedure                                            | Expected Results                                           |
 |------|------------------------------------------------------|-----------------------------------------------------------|
